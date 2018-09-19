@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -8,13 +9,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
+  private autenticacao: FormGroup
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
-  ) { }
+    public navParams: NavParams,
+    private formBuilder: FormBuilder
+  ) {
+    this.autenticacao = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      senha: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+    });
+  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+  ionViewDidLoad() {    
   }
 
 }
