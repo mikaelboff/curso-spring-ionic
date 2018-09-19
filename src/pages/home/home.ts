@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @IonicPage()
@@ -9,11 +9,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class HomePage {
 
-  private autenticacao: FormGroup
+  public autenticacao: FormGroup;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private menu: MenuController
   ) {
     this.autenticacao = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -21,7 +23,11 @@ export class HomePage {
     });
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    this.menu.enable(false);
+  }
+  ionViewDidLeave() {
+    this.menu.enable(true);
   }
 
   relizarLogin() {
