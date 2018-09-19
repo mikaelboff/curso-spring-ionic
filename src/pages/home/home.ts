@@ -21,7 +21,11 @@ export class HomePage {
     });
   }
 
-  ionViewDidLoad() {    
+  ionViewDidLoad() {
+  }
+
+  relizarLogin() {
+    this.navCtrl.setRoot("CategoriasPage");
   }
 
 }
