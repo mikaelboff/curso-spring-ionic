@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { CredenciaisDTO } from '../../models/credenciais.dto';
 
 @IonicPage()
 @Component({
@@ -15,7 +17,8 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    private menu: MenuController
+    private menu: MenuController,
+    private auth: AuthService
   ) {
     this.autenticacao = this.formBuilder.group({
       email: ['mikaelboff1@gmail.com', Validators.compose([Validators.required, Validators.email])],
@@ -31,7 +34,18 @@ export class HomePage {
   }
 
   relizarLogin() {
-    this.navCtrl.setRoot("CategoriasPage");
+    let formValue = this.autenticacao.value;
+
+    let credenciais = <CredenciaisDTO>{
+      email: formValue.email,
+      senha: formValue.senha
+    };
+
+    this.auth.authenticate(credenciais).subscribe(response => {
+      console.log(response.headers.get('Authorization'));
+      this.navCtrl.setRoot("CategoriasPage");
+    }, errror => { });
+
   }
 
 }
