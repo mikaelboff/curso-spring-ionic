@@ -18,8 +18,8 @@ export class HomePage {
     private menu: MenuController
   ) {
     this.autenticacao = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      senha: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+      email: ['mikaelboff1@gmail.com', Validators.compose([Validators.required, Validators.email])],
+      senha: ['123456', Validators.compose([Validators.required, Validators.minLength(6)])]
     });
   }
 
