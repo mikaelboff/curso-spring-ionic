@@ -28,9 +28,7 @@ export class CategoriasPage {
           console.log(sucesso);
           me.categorias = sucesso;
         },
-        erro => {
-          console.log(erro);
-        });
+        erro => { });
   }
 
 }
