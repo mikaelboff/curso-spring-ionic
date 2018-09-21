@@ -42,9 +42,9 @@ export class HomePage {
     };
 
     this.auth.authenticate(credenciais).subscribe(response => {
-      console.log(response.headers.get('Authorization'));
+      this.auth.successfullLogin(response.headers.get('Authorization'));
       this.navCtrl.setRoot("CategoriasPage");
-    }, errror => { });
+    }, error => { });
 
   }
 
