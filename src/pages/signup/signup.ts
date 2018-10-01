@@ -17,21 +17,21 @@ export class SignupPage {
     private formBuilder: FormBuilder
   ) {
     this.signup = this.formBuilder.group({
-      nome: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      nome: ['Joaquim', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(120)])],
+      email: ['joaquim@gmail.com', Validators.compose([Validators.required, Validators.email])],
       tipo: ['1', Validators.required],
-      cpfOuCnpj: ['', Validators.required],
-      senha: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-      logradouro: ['', Validators.required],
-      numero: ['', Validators.required],
-      complemento: [''],
-      bairro: [''],
-      cep: ['', Validators.required],
+      cpfOuCnpj: ['06774297978', Validators.compose([Validators.required, Validators.minLength(14), Validators.maxLength(18)])],
+      senha: ['123456', Validators.compose([Validators.required, Validators.minLength(6)])],
+      logradouro: ['Rua Via', Validators.required],
+      numero: ['25', Validators.required],
+      complemento: ['Apto 3'],
+      bairro: ['Copacabana'],
+      cep: ['10828333', Validators.required],
       telefone1: ['', Validators.required],
       telefone2: [''],
       telefone3: [''],
-      estadoId: ['', Validators.required],
-      cidadeId: ['', Validators.required],
+      estadoId: [null, Validators.required],
+      cidadeId: [null, Validators.required],
     });
   }
 
