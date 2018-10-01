@@ -27,6 +27,17 @@ export class AuthService {
         )
     }
 
+    refreshToken() {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refres_token`, {},
+            //evitar erro de parse de json em um corpo vazio
+            {
+                observe: 'response',
+                responseType: 'text',
+            }
+        )
+    }
+
     successfullLogin(authorizationValue: string) {
         let token = authorizationValue.substring(7);
         let user: LocalUser = {
