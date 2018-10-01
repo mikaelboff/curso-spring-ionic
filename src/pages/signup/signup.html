@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Signup</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="signup" (ngSubmit)="signupUser(); $event.preventDefault()">
+    <ion-item>
+      <ion-label stacked floating>Nome*</ion-label>
+      <ion-input type="text" formControlName="nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Email*</ion-label>
+      <ion-input type="text" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-list radio-group formControlName="tipo">
+      <ion-list-header>Tipo de cliente</ion-list-header>
+      <ion-item>
+        <ion-label>Pessoa física</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Pessoa jurídica</ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-label stacked floating>CPF ou CNPJ*</ion-label>
+      <ion-input type="text" formControlName="cpfOuCnpj" [brmasker]="{person: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Senha*</ion-label>
+      <ion-input type="password" formControlName="senha"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Logradouro*</ion-label>
+      <ion-input type="text" formControlName="logradouro"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Número*</ion-label>
+      <ion-input type="text" formControlName="numero"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Complemento</ion-label>
+      <ion-input type="text" formControlName="complemento"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Bairro</ion-label>
+      <ion-input type="text" formControlName="bairro"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>CEP*</ion-label>
+      <ion-input type="text" formControlName="cep" [brmasker]="{mask:'00000-000', len:9}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Telefone 1*</ion-label>
+      <ion-input type="text" formControlName="telefone1" [brmasker]="{phone: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Telefone 2</ion-label>
+      <ion-input type="text" formControlName="telefone2" [brmasker]="{phone: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Telefone 3</ion-label>
+      <ion-input type="text" formControlName="telefone3" [brmasker]="{phone: true}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Estado*</ion-label>
+      <ion-select #selectEstado formControlName="estadoId" (ionChange)="updateCidades(selectEstado.value)">
+        <ion-option value="1">Minas Gerais</ion-option>
+        <ion-option value="2">São Paulo</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked floating>Cidade*</ion-label>
+      <ion-select formControlName="cidadeId">
+        <ion-option value="1">Uberlândia</ion-option>
+        <ion-option value="2">Campinas</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <button ion-button block>CRIAR CONTA</button>
+  </form>
+</ion-content>

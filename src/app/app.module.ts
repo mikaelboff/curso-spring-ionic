@@ -5,6 +5,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 
+import { BrMaskerModule } from 'brmasker-ionic-3';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CategoriaService } from '../services/domain/categoria.service';
@@ -22,6 +24,7 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
+    BrMaskerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
