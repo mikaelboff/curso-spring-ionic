@@ -14,11 +14,13 @@
       <ion-label stacked floating>Nome*</ion-label>
       <ion-input type="text" formControlName="nome"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.nome.dirty && signup.controls.nome.errors" margin-left>Valor inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Email*</ion-label>
       <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.email.dirty && signup.controls.email.errors" margin-left>Valor inválido</p>
 
     <ion-list radio-group formControlName="tipo">
       <ion-list-header>Tipo de cliente</ion-list-header>
@@ -37,21 +39,27 @@
       <ion-label stacked floating>CPF ou CNPJ*</ion-label>
       <ion-input type="text" formControlName="cpfOuCnpj" [brmasker]="{person: true}"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.cpfOuCnpj.dirty && signup.controls.cpfOuCnpj.errors" margin-left>Valor
+      inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Senha*</ion-label>
       <ion-input type="password" formControlName="senha"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.senha.dirty && signup.controls.senha.errors" margin-left>Valor inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Logradouro*</ion-label>
       <ion-input type="text" formControlName="logradouro"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.logradouro.dirty && signup.controls.logradouro.errors" margin-left>Valor
+      inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Número*</ion-label>
       <ion-input type="text" formControlName="numero"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.numero.dirty && signup.controls.numero.errors" margin-left>Valor inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Complemento</ion-label>
@@ -67,11 +75,14 @@
       <ion-label stacked floating>CEP*</ion-label>
       <ion-input type="text" formControlName="cep" [brmasker]="{mask:'00000-000', len:9}"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.cep.dirty && signup.controls.cep.errors" margin-left>Valor inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Telefone 1*</ion-label>
       <ion-input type="text" formControlName="telefone1" [brmasker]="{phone: true}"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="signup.controls.telefone1.dirty && signup.controls.telefone1.errors" margin-left>Valor
+      inválido</p>
 
     <ion-item>
       <ion-label stacked floating>Telefone 2</ion-label>
@@ -97,6 +108,6 @@
       </ion-select>
     </ion-item>
 
-    <button ion-button block>CRIAR CONTA</button>
+    <button [disabled]="signup.inValid" ion-button block type="submit">CRIAR CONTA</button>
   </form>
 </ion-content>
