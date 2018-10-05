@@ -9,13 +9,13 @@
 
 
 <ion-content padding>
-<ion-list>
-  <button ion-item *ngFor="let item of itens">
-    <ion-thumbnail item-start>
-      <img [src]="item.imageUrl || 'assets/imgs/prod.jpg'">
-    </ion-thumbnail>
-    <h2>{{item.nome}}</h2>
-    <h2>{{item.preco | currency}}</h2>
-  </button>
-</ion-list>
+  <ion-list>
+    <button ion-item *ngFor="let item of itens" (click)="abrirDetalhamento(item)">
+      <ion-thumbnail item-start>
+        <img [src]="item.imageUrl || 'assets/imgs/prod.jpg'">
+      </ion-thumbnail>
+      <h2>{{item.nome}}</h2>
+      <h2>{{item.preco | currency}}</h2>
+    </button>
+  </ion-list>
 </ion-content>

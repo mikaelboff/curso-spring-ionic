@@ -28,10 +28,15 @@ export class ProdutosPage {
   }
 
   loadImageUrls() {
-    this.itens.forEach(item => this.service.getSmallImageFromBucket(item.id).subscribe(sucesso => {
-      item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
-    }, falha => {
+    this.itens.forEach(item => this.service.getSmallImageFromBucket(item.id)
+      .subscribe(sucesso => {
+        item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
+      }, falha => {
 
-    }))
+      }));
+  }
+
+  abrirDetalhamento(item: ProdutoDTO) {
+    this.navCtrl.push("ProdutoDetailPage", { produto: item });
   }
 }
