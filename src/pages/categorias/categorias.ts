@@ -31,4 +31,8 @@ export class CategoriasPage {
         erro => { });
   }
 
+  showProdutos(categoria: CategoriaDTO) {
+    this.navCtrl.push("ProdutosPage", { idCategoria: categoria.id });
+  }
+
 }
