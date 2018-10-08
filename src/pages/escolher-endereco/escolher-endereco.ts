@@ -25,8 +25,7 @@ export class EscolherEnderecoPage {
     if (localUser && localUser.email) {
       this.clienteService.findByEmail(localUser.email)
         .subscribe(response => {
-          this.items = response;
-          this.getImageIfExists();
+          this.items = response['enderecos'];
         },
           error => {
             if (error.status == 403) {
