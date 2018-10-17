@@ -50,6 +50,7 @@ export class EscolherEnderecoPage {
 
   nextPage(item: EnderecoDTO) {
     this.pedido.enderecoDeEntrega = { id: item.id }
+    this.navCtrl.push("PagamentosPage", { pedido: this.pedido })
   }
 
 }
