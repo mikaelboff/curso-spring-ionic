@@ -1,20 +1,21 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Rx";
-import { ClienteDTO } from "../../models/cliente.dto";
 import { API_CONFIG } from "../../config/api.config";
-import { StorageService } from "../storage.service";
 import { ClienteNewDTO } from "../../models/cliente-new.dto";
 
 @Injectable()
 export class ClienteService {
     constructor(
-        private httpClient: HttpClient,
-        private storage: StorageService
+        private httpClient: HttpClient
     ) { }
 
     findByEmail(email: string) {
         return this.httpClient.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
+    }
+
+    findById(id: string) {
+        return this.httpClient.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
     }
 
     getImageFromBucket(id: string): Observable<any> {

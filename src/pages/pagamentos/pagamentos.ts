@@ -29,7 +29,7 @@ export class PagamentosPage {
 
   nextPage() {
     this.pedido.pagamento = this.pagamento.value;
-    console.log(this.pedido);
+    this.navCtrl.setRoot("ConfirmacaoOrdemPage", { pedido: this.pedido });
   }
 
 }
