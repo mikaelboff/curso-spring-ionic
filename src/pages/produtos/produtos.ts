@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Refresher } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../services/domain/produto.service';
 import { API_CONFIG } from '../../config/api.config';
@@ -20,16 +20,40 @@ export class ProdutosPage {
   ) { }
 
   ionViewDidLoad() {
+    this.carregarDados();
+  }
 
+  carregarDados(refresher?: Refresher) {
     let idCategoria = this.navParams.get('idCategoria');
-    let loading = this.presentLoading();
+    let loading;
+
+    if (!this.fazendoPullRefresh(refresher)) {
+      loading = this.presentLoading();
+    }
+
     this.service.findAllByCategoria(idCategoria)
       .subscribe(sucesso => {
-        loading.dismiss();
+
+        if (!this.fazendoPullRefresh(refresher)) {
+          loading.dismiss();
+        } else {
+          refresher.complete();
+        }
+
         this.itens = sucesso['content'];
       }, falha => {
-        loading.dismiss();
+
+        if (!this.fazendoPullRefresh(refresher)) {
+          loading.dismiss();
+        } else {
+          refresher.complete();
+        }
+
       });
+  }
+
+  fazendoPullRefresh(refresh: Refresher) {
+    return refresh != null;
   }
 
   presentLoading() {
@@ -49,5 +73,9 @@ export class ProdutosPage {
 
   abrirDetalhamento(item: ProdutoDTO) {
     this.navCtrl.push("ProdutoDetailPage", { produto: item });
+  }
+
+  doRefresh(refresher) {
+    this.carregarDados(refresher);
   }
 }
