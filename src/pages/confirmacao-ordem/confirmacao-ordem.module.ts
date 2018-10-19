@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ConfirmacaoOrdemPage } from './confirmacao-ordem';
+import { PedidoService } from '../../services/domain/pedido.service';
 
 @NgModule({
   declarations: [
@@ -9,5 +10,8 @@ import { ConfirmacaoOrdemPage } from './confirmacao-ordem';
   imports: [
     IonicPageModule.forChild(ConfirmacaoOrdemPage),
   ],
+  providers: [
+    PedidoService
+  ]
 })
-export class ConfirmacaoOrdemPageModule {}
+export class ConfirmacaoOrdemPageModule { }

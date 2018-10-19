@@ -6,6 +6,7 @@ import { CartService } from '../../services/domain/cart.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { EnderecoDTO } from '../../models/endereco.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
+import { PedidoService } from '../../services/domain/pedido.service';
 
 /**
  * Generated class for the ConfirmacaoOrdemPage page.
@@ -30,7 +31,8 @@ export class ConfirmacaoOrdemPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private cartService: CartService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private pedidoService: PedidoService
   ) {
     this.pedido = this.navParams.get('pedido');
   }
@@ -53,5 +55,20 @@ export class ConfirmacaoOrdemPage {
 
   total() {
     return this.cartService.total();
+  }
+
+  back() {
+    this.navCtrl.setRoot("CartPage");
+  }
+
+  checkout() {
+    this.pedidoService.insert(this.pedido).subscribe(sucesso => {
+      this.cartService.createOrClearCart();
+      console.log(sucesso.headers.get('location'));
+    }, erro => {
+      if (erro.status == 403) {
+        this.navCtrl.setRoot("HomePage");
+      }
+    })
   }
 }
