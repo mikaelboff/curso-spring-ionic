@@ -75,7 +75,7 @@ export class ProdutosPage {
     this.navCtrl.push("ProdutoDetailPage", { produto: item });
   }
 
-  doRefresh(refresher) {
+  doRefresh(refresher: Refresher) {
     this.carregarDados(refresher);
   }
 }
