@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../services/domain/produto.service';
 import { API_CONFIG } from '../../config/api.config';
@@ -15,16 +15,27 @@ export class ProdutosPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private service: ProdutoService
+    private service: ProdutoService,
+    private loadingCtrl: LoadingController
   ) { }
 
   ionViewDidLoad() {
 
     let idCategoria = this.navParams.get('idCategoria');
+    let loading = this.presentLoading();
     this.service.findAllByCategoria(idCategoria)
       .subscribe(sucesso => {
+        loading.dismiss();
         this.itens = sucesso['content'];
-      }, falha => { });
+      }, falha => {
+        loading.dismiss();
+      });
+  }
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({ content: "CARREGANDO..." });
+    loader.present();
+    return loader;
   }
 
   loadImageUrls() {
