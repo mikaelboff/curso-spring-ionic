@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Refresher, InfiniteScroll } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../services/domain/produto.service';
 import { API_CONFIG } from '../../config/api.config';
@@ -11,6 +11,7 @@ import { API_CONFIG } from '../../config/api.config';
 })
 export class ProdutosPage {
   itens: Array<ProdutoDTO> = [];
+  page: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -23,37 +24,47 @@ export class ProdutosPage {
     this.carregarDados();
   }
 
-  carregarDados(refresher?: Refresher) {
+  /**
+   * Carrega os dados
+   * @param comp Refresher ou InfinityScroll
+   */
+  carregarDados(comp?) {
     let idCategoria = this.navParams.get('idCategoria');
     let loading;
 
-    if (!this.fazendoPullRefresh(refresher)) {
+    let fazendoRefreshOuInfinityScroll = this.fazendoPullRefreshOuScrollInfinito(comp);
+
+    if (!fazendoRefreshOuInfinityScroll) {
       loading = this.presentLoading();
     }
 
-    this.service.findAllByCategoria(idCategoria)
+    this.service.findAllByCategoria(idCategoria, this.page, 10)
       .subscribe(sucesso => {
 
-        if (!this.fazendoPullRefresh(refresher)) {
+        if (!fazendoRefreshOuInfinityScroll) {
           loading.dismiss();
         } else {
-          refresher.complete();
+          comp.complete();
         }
 
-        this.itens = sucesso['content'];
+        let start = this.itens.length;
+        this.itens = this.itens.concat(sucesso['content']);
+        let limit = this.itens.length - 1;
+
+        this.loadImageUrls(start, limit);
       }, falha => {
 
-        if (!this.fazendoPullRefresh(refresher)) {
+        if (!fazendoRefreshOuInfinityScroll) {
           loading.dismiss();
         } else {
-          refresher.complete();
+          comp.complete();
         }
 
       });
   }
 
-  fazendoPullRefresh(refresh: Refresher) {
-    return refresh != null;
+  fazendoPullRefreshOuScrollInfinito(comp) {
+    return comp != null;
   }
 
   presentLoading() {
@@ -62,7 +73,7 @@ export class ProdutosPage {
     return loader;
   }
 
-  loadImageUrls() {
+  loadImageUrls(start: number, limit: number) {
     this.itens.forEach(item => this.service.getSmallImageFromBucket(item.id)
       .subscribe(sucesso => {
         item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
@@ -76,6 +87,13 @@ export class ProdutosPage {
   }
 
   doRefresh(refresher: Refresher) {
+    this.page = 0;
+    this.itens = [];
     this.carregarDados(refresher);
+  }
+
+  doInfinite(infiniteScroll: InfiniteScroll) {
+    this.page++;
+    this.carregarDados(infiniteScroll);
   }
 }

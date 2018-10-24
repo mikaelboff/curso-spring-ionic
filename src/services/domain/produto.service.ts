@@ -8,8 +8,8 @@ import { ProdutoDTO } from "../../models/produto.dto";
 export class ProdutoService {
     constructor(public httpClient: HttpClient) { }
 
-    findAllByCategoria(idCategoria: number) {
-        return this.httpClient.get(`${API_CONFIG.baseUrl}/produtos?categorias=${idCategoria}`);
+    findAllByCategoria(idCategoria: string, page: number = 0, linesPerPage: number = 24) {
+        return this.httpClient.get(`${API_CONFIG.baseUrl}/produtos/?categorias=${idCategoria}&page=${page}&linesPerPage=${linesPerPage}`);
     }
 
     getSmallImageFromBucket(idProduto: string): Observable<any> {
