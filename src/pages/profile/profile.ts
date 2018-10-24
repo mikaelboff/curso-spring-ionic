@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
 import { ClienteDTO } from '../../models/cliente.dto';
-import { ThrowStmt } from '@angular/compiler';
 import { API_CONFIG } from '../../config/api.config';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -14,12 +14,15 @@ import { API_CONFIG } from '../../config/api.config';
 export class ProfilePage {
 
   cliente: ClienteDTO;
+  picture: string;
+  cameraOn: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private storage: StorageService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private camera: Camera
   ) { }
 
   ionViewDidLoad() {
@@ -45,6 +48,24 @@ export class ProfilePage {
       .subscribe(response => {
         this.cliente.urlImagem = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
       }, error => { })
+  }
+
+  getPicture() {
+    this.cameraOn = true;
+
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.picture = 'data:image/png;base64,' + imageData;
+      this.cameraOn = false;
+    }, (err) => {
+    });
+
   }
 
 }
