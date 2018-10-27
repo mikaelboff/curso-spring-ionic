@@ -55,7 +55,7 @@ export class ProfilePage {
       }, error => { })
   }
 
-  getPicture() {
+  getPicture(galeria?: boolean) {
     this.cameraOn = true;
 
     const options: CameraOptions = {
@@ -63,6 +63,10 @@ export class ProfilePage {
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE
+    }
+
+    if (Boolean(galeria)) {
+      options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
     }
 
     this.camera.getPicture(options).then((imageData) => {
