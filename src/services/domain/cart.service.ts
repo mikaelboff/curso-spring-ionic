@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { StorageService } from "../storage.service";
 import { Cart } from "../../models/cart";
-import { callLifecycleHooksChildrenFirst } from "@angular/core/src/view/provider";
 import { ProdutoDTO } from "../../models/produto.dto";
 
 @Injectable()

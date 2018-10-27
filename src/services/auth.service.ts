@@ -31,7 +31,7 @@ export class AuthService {
 
     refreshToken() {
         return this.http.post(
-            `${API_CONFIG.baseUrl}/auth/refres_token`, {},
+            `${API_CONFIG.baseUrl}/auth/refresh_token`, {},
             //evitar erro de parse de json em um corpo vazio
             {
                 observe: 'response',
