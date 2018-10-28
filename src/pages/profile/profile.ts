@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
@@ -15,6 +15,7 @@ export class ProfilePage {
 
   cliente: ClienteDTO;
   picture: string;
+  profileImage: string = 'assets/imgs/avatar-blank.png';
   cameraOn: boolean = false;
 
   constructor(
@@ -22,7 +23,8 @@ export class ProfilePage {
     public navParams: NavParams,
     private storage: StorageService,
     private clienteService: ClienteService,
-    private camera: Camera
+    private camera: Camera,
+    private zone: NgZone
   ) { }
 
   ionViewDidLoad() {
@@ -51,7 +53,12 @@ export class ProfilePage {
   getImageIfExists() {
     this.clienteService.getImageFromBucket(this.cliente.id)
       .subscribe(response => {
-        this.cliente.urlImagem = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
+
+        this.zone.run(() => {
+          this.cliente.urlImagem = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
+          this.profileImage = this.cliente.urlImagem;
+        });
+
       }, error => { })
   }
 
