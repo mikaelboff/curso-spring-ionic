@@ -53,12 +53,8 @@ export class ProfilePage {
   getImageIfExists() {
     this.clienteService.getImageFromBucket(this.cliente.id)
       .subscribe(response => {
-
-        this.zone.run(() => {
-          this.cliente.urlImagem = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
-          this.profileImage = this.cliente.urlImagem;
-        });
-
+        this.cliente.urlImagem = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
+        this.profileImage = this.cliente.urlImagem + `?random=${Math.random()}`;
       }, error => { })
   }
 
