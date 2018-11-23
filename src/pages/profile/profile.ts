@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
@@ -23,8 +23,7 @@ export class ProfilePage {
     public navParams: NavParams,
     private storage: StorageService,
     private clienteService: ClienteService,
-    private camera: Camera,
-    private zone: NgZone
+    private camera: Camera
   ) { }
 
   ionViewDidLoad() {
